@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func CommandPipeLine(commands ...[]string) ([]byte, error) {
+func Output(commands ...[]string) ([]byte, error) {
 	cmds := make([]*exec.Cmd, len(commands))
 	for i, c := range commands {
 		cmds[i] = exec.Command(c[0], c[1:]...)
