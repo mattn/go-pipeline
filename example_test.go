@@ -7,7 +7,7 @@ import (
 
 func ExampleCommandPipeLine() {
 	out, err := CommandPipeLine(
-		[]string{"git", "log", "--outline"},
+		[]string{"git", "log", "--oneline"},
 		[]string{"grep", "first import"},
 		[]string{"wc", "-l"},
 	)
