@@ -2,6 +2,7 @@ package pipeline
 
 import (
 	"bytes"
+	"os"
 	"os/exec"
 )
 
@@ -16,6 +17,7 @@ func Output(commands ...[]string) ([]byte, error) {
 				return nil, err
 			}
 		}
+		cmds[i].Stderr = os.Stderr
 	}
 	var out bytes.Buffer
 	cmds[len(cmds)-1].Stdout = &out
