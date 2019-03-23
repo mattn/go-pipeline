@@ -18,6 +18,15 @@ fmt.Println(string(out))
 // 1
 ```
 
+```go
+out, _ = CombinedOutput(
+	[]string{"rmdir", "not_exist_dir"},
+)
+fmt.Println(string(out))
+// Output:
+// rmdir: failed to remove 'not_exist_dir': No such file or directory
+```
+
 ## Installation
 
 ```
