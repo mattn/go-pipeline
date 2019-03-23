@@ -34,7 +34,7 @@ func Output(commands ...[]string) ([]byte, error) {
 	return out.Bytes(), nil
 }
 
-// CombinedOutput はエラー出力もbyte文字列として返却する
+// CombinedOutput runs the commands and returns its combined standard output and standard error.
 func CombinedOutput(commands ...[]string) ([]byte, error) {
 	cmds := make([]*exec.Cmd, len(commands))
 	var err error
