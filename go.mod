@@ -1,1 +1,1 @@
-module github.com/jiro4989/go-pipeline
+module github.com/mattn/go-pipeline
