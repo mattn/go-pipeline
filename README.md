@@ -19,17 +19,6 @@ fmt.Println(string(out))
 ```
 
 ```go
-out, err := CombinedOutput(
-	[]string{"echo", "1"},
-	[]string{"grep", "2"},
-)
-if err == nil {
-	log.Fatal(err)
-}
-if string(out) != "" {
-	log.Fatal("output is not empty.")
-}
-
 out, _ = CombinedOutput(
 	[]string{"rmdir", "not_exist_dir"},
 )
