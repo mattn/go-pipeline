@@ -2,16 +2,25 @@ package pipeline
 
 import (
 	"bytes"
+	"context"
 	"os"
 	"os/exec"
 )
 
 func Output(commands ...[]string) ([]byte, error) {
+	return OutputContext(nil, commands...)
+}
+
+func OutputContext(ctx context.Context, commands ...[]string) ([]byte, error) {
 	cmds := make([]*exec.Cmd, len(commands))
 	var err error
 
 	for i, c := range commands {
-		cmds[i] = exec.Command(c[0], c[1:]...)
+		if ctx == nil {
+			cmds[i] = exec.Command(c[0], c[1:]...)
+		} else {
+			cmds[i] = exec.CommandContext(ctx, c[0], c[1:]...)
+		}
 		if i > 0 {
 			if cmds[i].Stdin, err = cmds[i-1].StdoutPipe(); err != nil {
 				return nil, err
@@ -36,12 +45,21 @@ func Output(commands ...[]string) ([]byte, error) {
 
 // CombinedOutput runs the commands and returns its combined standard output and standard error.
 func CombinedOutput(commands ...[]string) ([]byte, error) {
+	return CombinedOutputContext(nil, commands...)
+}
+
+// CombinedOutputContext runs the commands and returns its combined standard output and standard error.
+func CombinedOutputContext(ctx context.Context, commands ...[]string) ([]byte, error) {
 	cmds := make([]*exec.Cmd, len(commands))
 	var err error
 
 	var out bytes.Buffer
 	for i, c := range commands {
-		cmds[i] = exec.Command(c[0], c[1:]...)
+		if ctx == nil {
+			cmds[i] = exec.Command(c[0], c[1:]...)
+		} else {
+			cmds[i] = exec.CommandContext(ctx, c[0], c[1:]...)
+		}
 		if i > 0 {
 			if cmds[i].Stdin, err = cmds[i-1].StdoutPipe(); err != nil {
 				return nil, err
